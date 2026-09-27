@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 160" width="100%" height="100%">
+  <defs>
+    <linearGradient id="roseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e91e63" />
+      <stop offset="100%" stop-color="#c2185b" />
+    </linearGradient>
+    <linearGradient id="softPinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f472b6" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+  </defs>
+
+  <!-- Left Icon: Two Embracing Figures -->
+  <g transform="translate(15, 25)">
+    <circle cx="28" cy="22" r="14" fill="url(#softPinkGrad)" />
+    <circle cx="58" cy="18" r="13" fill="url(#roseGrad)" />
+    <path d="M 12 56 C 12 40 26 38 34 46 C 40 54 36 78 26 84 C 18 78 12 68 12 56 Z" fill="url(#softPinkGrad)" />
+    <path d="M 44 88 C 30 76 28 52 42 42 C 54 34 66 42 68 56 C 70 70 58 84 44 88 Z" fill="url(#roseGrad)" opacity="0.95" />
+    <path d="M 22 72 C 34 88 52 92 68 76 C 58 98 32 96 22 72 Z" fill="#d81b60" />
+    <path d="M 38 60 Q 45 84 54 88 Q 42 80 38 60 Z" fill="#ffffff" opacity="0.6" />
+  </g>
+
+  <!-- Main Wordmark: HerAura -->
+  <g transform="translate(110, 88)">
+    <text font-family="'Plus Jakarta Sans', 'Montserrat', -apple-system, sans-serif" font-weight="900" font-size="72" letter-spacing="-1.5" fill="#c2185b">
+      <tspan fill="#d81b60">Her</tspan><tspan fill="#c2185b">Aura</tspan>
+    </text>
+  </g>
+
+  <!-- Botanical Leaf Sprig Sprouting from the final 'a' -->
+  <g transform="translate(435, 20)">
+    <path d="M 15 78 C 22 55 35 35 55 18" stroke="#c2185b" stroke-width="4.5" stroke-linecap="round" fill="none" />
+    <path d="M 55 18 C 55 5 70 0 74 12 C 76 22 66 26 55 18 Z" fill="#e91e63" />
+    <path d="M 48 30 C 58 22 78 28 72 40 C 64 45 52 38 48 30 Z" fill="#d81b60" />
+    <path d="M 38 38 C 28 26 15 32 20 44 C 26 48 34 44 38 38 Z" fill="#ec4899" />
+    <path d="M 32 52 C 45 46 62 55 56 66 C 48 70 38 62 32 52 Z" fill="#e91e63" />
+    <path d="M 22 62 C 12 52 2 60 8 72 C 14 76 20 70 22 62 Z" fill="#f472b6" />
+  </g>
+
+  <!-- Subtitle Tagline: "A digital safe space for girls" -->
+  <g transform="translate(112, 126)">
+    <text font-family="'Playfair Display', 'Georgia', 'Times New Roman', serif" font-style="italic" font-weight="600" font-size="23" fill="#c2185b" letter-spacing="0.5">
+      A digital safe space for girls
+    </text>
+  </g>
+</svg>

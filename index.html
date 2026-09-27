@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HerAura — A digital safe space for girls</title>
+    <meta name="description" content="A digital safe space for girls. Your daily guide to feminine wellness, mentorship, supportive community, and learning." />
+    <meta property="og:title" content="HerAura — A digital safe space for girls" />
+    <meta property="og:description" content="A digital safe space for girls. Your daily guide to feminine wellness, mentorship, supportive community, and learning." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-[#faf7f7] text-[#2d2d2d] antialiased selection:bg-pink-200 selection:text-pink-900">
+    <div id="root"></div>
+    <script>
+      // Gracefully prevent unhandled WebSocket rejections in iframe/preview sandbox
+      window.addEventListener('unhandledrejection', function(event) {
+        var str = (event && (event.reason ? (event.reason.message || String(event.reason)) : '')) + '';
+        if (str.toLowerCase().indexOf('websocket') !== -1) {
+          event.preventDefault();
+        }
+      });
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

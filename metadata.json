@@ -1,0 +1,6 @@
+{
+  "name": "HerAura",
+  "description": "A digital safe space for girls. Your daily guide to feminine wellness, mentorship, supportive community, and learning.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
