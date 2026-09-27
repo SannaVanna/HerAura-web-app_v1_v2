@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { HerAuraLogo } from './HerAuraLogo';
 import { FOUNDERS } from '../data/initialData';
+import { apiService } from '../services/api';
 import {
   Moon,
   Sun,
@@ -102,32 +103,27 @@ export const LandingPage: React.FC<LandingPageProps> = ({
     setContactStatusMsg('');
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: contactName,
-          email: contactEmail,
-          address: contactAddress,
-          message: contactMessage,
-        }),
+      const res = await apiService.submitContactForm({
+        name: contactName,
+        email: contactEmail,
+        address: contactAddress,
+        message: contactMessage,
       });
 
-      const data = await response.json();
-      if (response.ok) {
+      if (res.success) {
         setContactStatus('success');
-        setContactStatusMsg(data.message || 'Your message has been received!');
+        setContactStatusMsg(res.message || 'Your message has been received!');
         setContactName('');
         setContactEmail('');
         setContactAddress('');
         setContactMessage('');
       } else {
         setContactStatus('error');
-        setContactStatusMsg(data.error || 'Unable to submit contact form.');
+        setContactStatusMsg(res.error || 'Unable to submit contact form.');
       }
-    } catch (err) {
+    } catch {
       setContactStatus('error');
-      setContactStatusMsg('Network error connecting to backend service.');
+      setContactStatusMsg('Unable to submit contact form.');
     }
   };
 
@@ -143,24 +139,18 @@ export const LandingPage: React.FC<LandingPageProps> = ({
     setNewsletterMsg('');
 
     try {
-      const response = await fetch('/api/newsletter', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: newsletterEmail }),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
+      const res = await apiService.subscribeNewsletter(newsletterEmail);
+      if (res.success) {
         setNewsletterStatus('success');
-        setNewsletterMsg(data.message || 'Subscribed to HerAura updates!');
+        setNewsletterMsg(res.message || 'Subscribed to HerAura updates!');
         setNewsletterEmail('');
       } else {
         setNewsletterStatus('error');
-        setNewsletterMsg(data.error || 'Failed to subscribe.');
+        setNewsletterMsg(res.error || 'Failed to subscribe.');
       }
-    } catch (err) {
+    } catch {
       setNewsletterStatus('error');
-      setNewsletterMsg('Service currently offline.');
+      setNewsletterMsg('Failed to subscribe.');
     }
   };
 

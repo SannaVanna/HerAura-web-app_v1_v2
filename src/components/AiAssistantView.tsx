@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Mentor, MentorRecommendation } from '../types';
+import { apiService } from '../services/api';
 import {
   Sparkles,
   Send,
@@ -78,46 +79,40 @@ export const AiAssistantView: React.FC<AiAssistantViewProps> = ({
     setLoading(true);
 
     try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: query,
-          conversationHistory: messages.map((m) => ({
-            role: m.sender === 'user' ? 'user' : 'model',
-            content: m.text,
-          })),
-        }),
-      });
+      const result = await apiService.sendChatMessage(query);
+      const recs: MentorRecommendation[] = result.recommendedMentor
+        ? [
+            {
+              mentorId: result.recommendedMentor.id,
+              name: result.recommendedMentor.name,
+              title: result.recommendedMentor.title,
+              image: result.recommendedMentor.image,
+              reason: `Expert guidance in ${result.recommendedMentor.expertise?.slice(0, 2).join(' & ') || result.recommendedMentor.category}`,
+            },
+          ]
+        : [];
 
-      const data = await response.json();
-
-      if (response.ok) {
-        const botMsg: ChatMessage = {
-          id: 'bot-' + Date.now(),
-          sender: 'assistant',
-          text: data.reply,
-          recommendations: data.recommendations || [],
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        };
-        setMessages((prev) => [...prev, botMsg]);
-      } else {
-        throw new Error(data.error || 'Unable to fetch response');
-      }
-    } catch (err) {
-      // Graceful fallback
+      const botMsg: ChatMessage = {
+        id: 'bot-' + Date.now(),
+        sender: 'assistant',
+        text: result.text,
+        recommendations: recs,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      };
+      setMessages((prev) => [...prev, botMsg]);
+    } catch {
       const fallbackMsg: ChatMessage = {
         id: 'bot-' + Date.now(),
         sender: 'assistant',
         text: "You are doing wonderfully, sister. Remember to be gentle with yourself. Whether you're mastering code, navigating your cycle, or pursuing new goals, our HerAura community and mentors are right here by your side.",
         recommendations: [
           {
-            mentorId: 'm1',
+            mentorId: 'nora-godwin',
             name: 'Nora Godwin Teneke',
-            title: 'AI & Data Ethics Researcher (MSc)',
+            title: 'AI & Data Ethics Specialist | Co-Founder',
             image: '/src/assets/images/founder_nora_teneke_1789946025497.jpg',
             reason: 'Great mentor for STEM education and ethical technology.',
-          }
+          },
         ],
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };

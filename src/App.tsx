@@ -46,8 +46,6 @@ import {
   Bell,
   MessageCircle,
   X,
-  WifiOff,
-  RefreshCw,
   AlertCircle,
   ArrowLeft,
   Search,
@@ -92,10 +90,6 @@ export default function App() {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [selectedMentor, setSelectedMentor] = useState<Mentor | null>(null);
   const [showFloatingAi, setShowFloatingAi] = useState(false);
-  const [backendStatus, setBackendStatus] = useState<{ connected: boolean; provider: string }>({
-    connected: true,
-    provider: 'Local Safe Space Service',
-  });
 
   // Active Notifications State (persisted with fallback to INITIAL_NOTIFICATIONS)
   const [notifications, setNotifications] = useState<InAppNotification[]>(() => {
@@ -147,12 +141,7 @@ export default function App() {
     setNotifications((prev) => [notif, ...prev]);
   };
 
-  // Check backend status on mount
-  useEffect(() => {
-    apiService.checkBackendStatus().then((status) => {
-      setBackendStatus(status);
-    });
-  }, []);
+
 
   // Sync posts and courses with persistent backend API & IndexedDB
   useEffect(() => {
@@ -468,40 +457,8 @@ export default function App() {
       ) : (
         /* 2. INTERNAL APP VIEW (Matching the 14 mobile UI reference screens) */
         <div id="internal-app-container" className="min-h-screen flex flex-col pb-24">
-          {/* Offline Mode Banner when backend connection is lost */}
-          {!backendStatus.connected && (
-            <motion.div
-              id="offline-mode-banner"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="bg-gradient-to-r from-amber-600 via-amber-500 to-orange-500 text-white px-4 py-2.5 text-xs font-semibold shadow-md sticky top-0 z-40 border-b border-amber-400/30"
-            >
-              <div className="max-w-4xl mx-auto w-full flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2">
-                  <WifiOff className="w-4 h-4 text-amber-100 flex-shrink-0 animate-pulse" />
-                  <span>
-                    <strong>Offline Mode:</strong> Server connection lost. You can continue viewing all cached lessons, community discussions, and wellness entries safely.
-                  </span>
-                </div>
-                <button
-                  id="offline-retry-btn"
-                  onClick={async () => {
-                    const status = await apiService.checkBackendStatus();
-                    setBackendStatus(status);
-                  }}
-                  className="px-2.5 py-1 rounded-lg bg-black/20 hover:bg-black/30 text-white text-[11px] font-bold flex items-center gap-1 transition-colors flex-shrink-0 cursor-pointer"
-                  title="Retry backend connection"
-                >
-                  <RefreshCw className="w-3 h-3" />
-                  <span>Reconnect</span>
-                </button>
-              </div>
-            </motion.div>
-          )}
-
           {/* Unified Clean Application Header (Matching uploaded Screenshot 1 & 2) */}
-          <header className={`sticky ${!backendStatus.connected ? 'top-9' : 'top-0'} z-30 bg-white/95 dark:bg-[#1a1d20]/95 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 px-4 sm:px-6 py-2.5 flex items-center justify-between shadow-2xs transition-all`}>
+          <header className="sticky top-0 z-30 bg-white/95 dark:bg-[#1a1d20]/95 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 px-4 sm:px-6 py-2.5 flex items-center justify-between shadow-2xs transition-all">
             {/* Left: Brand Logo / Profile image */}
             <div className="flex items-center gap-3">
               <div
